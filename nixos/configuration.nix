@@ -8,7 +8,6 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      <home-manager/nixos>
     ];
 
   # Bootloader.
@@ -44,17 +43,10 @@
     LC_TIME = "de_DE.UTF-8";
   };
 
-  programs.zsh = {
-     enable = true;
-     ohMyZsh = {
-       enable = true;
-       plugins = [ "git" ];
-     };
-  };
   services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.displayManager.gdm.enable = true;
   # services.xserver.desktopManager.gnome.enable = true;
-  programs.hyprland.enable = true;
+  # programs.hyprland.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -97,59 +89,23 @@
 
   };
 
-  home-manager.users.iaquobe = {
-    programs.waybar.enable = true;
-    home.packages = with pkgs; [ 
-        fzf
-        ripgrep
-        firefox 
-        eww-wayland 
-        wofi 
-        lsd
-    ];
-    home.stateVersion = "23.05";
-    
-  };
-     
-  
-  nixpkgs.overlays = [
-    (self: super: {
-       waybar = super.waybar.overrideAttrs (oldAttrs: {
-         src = super.fetchFromGithub {
-           owner = "Alexays";
-           repo = "waybar";
-           rev = "e30fba0b8f875c7f35e3173be2b9f6f3ffe3641e";
-           hash = "whatever the hash is here";
-         };
-         mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-       });
-    })
-  ];
+  programs.zsh.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    git
-    vim 
-    neovim  
-    kitty
-    python3
     pulseaudio
     pavucontrol
-    bottom
-    swww
-    tmux
-    fzf
+
+    git
+    vim 
+    python3
     zsh
     gcc
     trash-cli
     gnumake
     wirelesstools
     unzip
-    # glib
-    # xdg-utils
-    mako
-    wdisplays
   ];
 
   fonts.fonts = with pkgs; [ 

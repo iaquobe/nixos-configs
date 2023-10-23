@@ -28,18 +28,27 @@
 (defwidget performance []
   (box
   :class "performance"
-  (eventbox 
-    (box :orientation "v"
-      (box
-        (box :class "circle" (circular-progress :clockwise false :start-at 75 :thickness 4 :class "cpu" :value "${EWW_CPU.avg}" ""))
-        (box :class "circle" (circular-progress :clockwise false :start-at 75 :thickness 4 :class "ram" :value "${EWW_RAM.used_mem_perc}" ""))
+    (eventbox 
+    :class "caretbutton"
+      (box :orientation "v"
+        (box
+          (box :class "circle" 
+            (circular-progress :clockwise false :start-at 75 :thickness 4 :class "cpu" 
+              :value "${EWW_CPU.avg}" ""))
+          (box :class "circle" 
+            (circular-progress :clockwise false :start-at 75 :thickness 4 :class "ram" 
+              :value "${EWW_RAM.used_mem_perc}" ""))
+        )
+        (box
+          (box :class "circle" 
+            (circular-progress :clockwise false :start-at 75 :thickness 4 :class "dsk" 
+              :value "${EWW_DISK["/"].used_perc}"  ""))
+          (box :class "circle" 
+            (circular-progress :clockwise false :start-at 75 :thickness 4 :class "bty" 
+              :value "${EWW_BATTERY.status}" "󰂎"))
+       )
       )
-      (box
-        (box :class "circle" (circular-progress :clockwise false :start-at 75 :thickness 4 :class "dsk" :value "${EWW_DISK["/"].used_perc}"  ""))
-        (box :class "circle" (circular-progress :clockwise false :start-at 75 :thickness 4 :class "bty" :value "${EWW_BATTERY.status}" "󰂎"))
-     )
     )
-  )
   )
 )
 
