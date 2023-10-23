@@ -3,33 +3,153 @@
 ;󰀟󰂎
 
 
-;variables
-;(defpoll volume
-;  :interval "0.05s"
-;  "pactl get-sink-volume @DEFAULT_SINK@ | grep '%' | cut -d '/' -f 2 | cut -d '%' -f 1 | tr -d ' '")
+
+(include "./modules/control/components.yuck")
+
+(defvar wifi-menu-show false)
+(defvar bluetooth-menu-show false)
+(defvar power-menu-show false)
+(defvar volume-menu-show false)
+(defvar brightness-menu-show false)
 
 
 (defwidget wifi []
-  "wifi"
+  (dualbutton :name "󰖩"
+    :primary ""
+    :secondary "$HOME/.config/eww/scripts/toggle_variable.sh wifi-menu-show")
 )
 
 (defwidget bluetooth []
-  "bluetooth"
+  (dualbutton :name "󰂯"
+    :primary ""
+    :secondary "$HOME/.config/eww/scripts/toggle_variable.sh bluetooth-menu-show")
 )
 
 (defwidget eth []
-  "eth"
+  (singlebutton :name "󰌗" :primary "")
 )
 
 (defwidget power []
-  "power"
+  (singlebutton :name "" 
+    :primary "$HOME/.config/eww/scripts/toggle_variable.sh power-menu-show"
+  )
 )
+
+(defwidget wifi-menu []
+  (revealer 
+    :transition "slidedown" 
+    :reveal wifi-menu-show
+    (box
+      :class "submenu"
+      "wifi"
+      (button 
+        :onclick "eww close control-center"
+        "")
+      (button 
+        :onclick "eww close control-center"
+        "")
+      (button 
+        :onclick "eww close control-center"
+        "")
+      (button 
+        :onclick "eww close control-center"
+        "")
+    )
+  )
+)
+
+(defwidget bluetooth-menu []
+  (revealer 
+    :transition "slidedown" 
+    :reveal bluetooth-menu-show
+    (box
+      :class "submenu"
+      "bluetooth"
+    )
+  )
+)
+
+(defwidget power-menu []
+  (revealer 
+    :transition "slidedown" 
+    :reveal power-menu-show
+    (box
+      :class "submenu"
+      (button 
+        :class "highlight"
+        :onclick "eww close control-center"
+        "")
+      (button 
+        :class "highlight"
+        :onclick "eww close control-center"
+        "")
+      (button 
+        :class "highlight"
+        :onclick "eww close control-center"
+        "")
+      (button 
+        :class "highlight"
+        :onclick "eww close control-center"
+        "")
+    )
+  )
+)
+
+(defwidget volume []
+  (box 
+    :orientation "v"
+    (slider :name ""
+      :value "${volume}"
+      :change "pactl set-sink-volume @DEFAULT_SINK@ {}%"
+      :primary ""
+      :secondary "$HOME/.config/eww/scripts/toggle_variable.sh volume-menu-show"
+    )
+  )
+)
+
+(defwidget brightness []
+  (box
+    :orientation "v"
+    (slider 
+      :name "" 
+      :value "50" 
+      :change ""
+      :primary ""
+      :secondary "$HOME/.config/eww/scripts/toggle_variable.sh brightness-menu-show"
+    )
+  )
+)
+
+
+(defwidget volume-menu []
+  (revealer 
+    :transition "slidedown" 
+    :reveal volume-menu-show
+    (box
+      :class "submenu"
+      "volume"
+    )
+  )
+)
+
+(defwidget brightness-menu []
+  (revealer 
+    :transition "slidedown" 
+    :reveal brightness-menu-show
+    (box
+      :class "submenu"
+      "brightness"
+    )
+  )
+)
+
 
 (defwidget performance []
   (box
   :class "performance"
     (eventbox 
-    :class "caretbutton"
+      :class "singlebutton"
+      :onclick "kitty btm &"
       (box :orientation "v"
         (box
           (box :class "circle" 
@@ -58,55 +178,26 @@
     :space-evenly false
     :orientation "v"
     (box :orientation "h" 
-      (dualbutton :name "󰖩")
-      (dualbutton :name "󰂯")
-      (button :class "caret" "󰌗")
-      (button :class "caret" :onclick "eww close control-center" ""))
-    (slider :name ""
-      :value "${volume}"
-      :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%")
-    (slider :name "" :value "50" :onchange "")
+      (wifi)
+      (bluetooth)
+      (eth)
+      (power))
+    (wifi-menu)
+    (bluetooth-menu)
+    (power-menu)
+    (volume)
+    (volume-menu)
+    (brightness)
+    (brightness-menu)
     (box 
       (box :orientation "v"
         (box 
-          (caret :name "")
-          (caret :name ""))
-        (button :class "caret" "music"))
+          (singlebutton :name "" :primary "$(sleep 0.1s; grim -g \"$(slurp)\")&")
+          (singlebutton :name "" :primary "")
+          )
+        (button :class "singlebutton" "music"))
       (performance)
     )
-  )
-)
-
-(defwidget caret [name]
-  (box
-    :class "caret"
-    (eventbox :class "caretbutton"
-      name
-    )
-  )
-)
-
-(defwidget slider [name value onchange]
-  (box :orientation "h" 
-    :class "slidergroup"
-    :space-evenly false
-    (button :class "slideraction" name)
-    (scale :class "slider" :hexpand true :min 0 :max 101 
-      :value value
-      :onchange onchange
-      )
-    (button :class "slidermenu" "")
-  )
-)
-
-(defwidget dualbutton [name]
-  (box
-    :class "dualbutton"
-    :space-evenly false
-    (eventbox :class "dualbutton-primary" :hexpand true
-      name)
-    (eventbox :class "dualbutton-secondary" 
-      " ")
   )
 )
 

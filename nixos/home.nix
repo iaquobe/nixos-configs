@@ -17,6 +17,8 @@
     eww-wayland
     swww
     wofi
+    slurp
+    grim
 
     firefox
     kitty

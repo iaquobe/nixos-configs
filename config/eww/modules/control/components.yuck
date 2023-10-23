@@ -1,0 +1,48 @@
+(defwidget slider [name value primary secondary change]
+  (box 
+    :orientation "h" 
+    :class "slidergroup"
+    :space-evenly false
+    (button 
+      :class "slideraction" 
+      :onclick primary
+      name)
+    (scale 
+      :class "slider" 
+      :hexpand true 
+      :min 0 
+      :max 101 
+      :value value
+      :onchange change)
+    (button 
+      :class "slidermenu" 
+      :onclick secondary
+      "")
+  )
+)
+
+(defwidget dualbutton [name primary secondary]
+  (box
+    :class "dualbutton"
+    :space-evenly false
+    (eventbox 
+      :class "dualbutton-primary" 
+      :hexpand true 
+      :onclick primary
+      name)
+    (eventbox 
+      :class "dualbutton-secondary" 
+      :onclick secondary
+      " ")
+
+      ;${EWW_EXECUTABLE} update wifi-menu-show=true"
+  )
+)
+
+(defwidget singlebutton [name primary]
+  (button
+    :class "singlebutton"
+    :onclick primary
+    name
+  )
+)
