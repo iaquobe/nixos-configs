@@ -1,0 +1,112 @@
+;          󰌗
+;  󰂯 󰆐󰑫󰖩󰤯󰤮󰤨
+;󰀟󰂎
+
+
+;variables
+;(defpoll volume
+;  :interval "0.05s"
+;  "pactl get-sink-volume @DEFAULT_SINK@ | grep '%' | cut -d '/' -f 2 | cut -d '%' -f 1 | tr -d ' '")
+
+
+(defwidget wifi []
+  "wifi"
+)
+
+(defwidget bluetooth []
+  "bluetooth"
+)
+
+(defwidget eth []
+  "eth"
+)
+
+(defwidget power []
+  "power"
+)
+
+(defwidget performance []
+  (box
+  :class "performance"
+  (eventbox 
+    (box :orientation "v"
+      (box
+        (box :class "circle" (circular-progress :clockwise false :start-at 75 :thickness 4 :class "cpu" :value "${EWW_CPU.avg}" ""))
+        (box :class "circle" (circular-progress :clockwise false :start-at 75 :thickness 4 :class "ram" :value "${EWW_RAM.used_mem_perc}" ""))
+      )
+      (box
+        (box :class "circle" (circular-progress :clockwise false :start-at 75 :thickness 4 :class "dsk" :value "${EWW_DISK["/"].used_perc}"  ""))
+        (box :class "circle" (circular-progress :clockwise false :start-at 75 :thickness 4 :class "bty" :value "${EWW_BATTERY.status}" "󰂎"))
+     )
+    )
+  )
+  )
+)
+
+(defwidget control-center []
+  (box 
+    :class "control-center"
+    :space-evenly false
+    :orientation "v"
+    (box :orientation "h" 
+      (dualbutton :name "󰖩")
+      (dualbutton :name "󰂯")
+      (button :class "caret" "󰌗")
+      (button :class "caret" :onclick "eww close control-center" ""))
+    (slider :name ""
+      :value "${volume}"
+      :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%")
+    (slider :name "" :value "50" :onchange "")
+    (box 
+      (box :orientation "v"
+        (box 
+          (caret :name "")
+          (caret :name ""))
+        (button :class "caret" "music"))
+      (performance)
+    )
+  )
+)
+
+(defwidget caret [name]
+  (box
+    :class "caret"
+    (eventbox :class "caretbutton"
+      name
+    )
+  )
+)
+
+(defwidget slider [name value onchange]
+  (box :orientation "h" 
+    :class "slidergroup"
+    :space-evenly false
+    (button :class "slideraction" name)
+    (scale :class "slider" :hexpand true :min 0 :max 101 
+      :value value
+      :onchange onchange
+      )
+    (button :class "slidermenu" "")
+  )
+)
+
+(defwidget dualbutton [name]
+  (box
+    :class "dualbutton"
+    :space-evenly false
+    (eventbox :class "dualbutton-primary" :hexpand true
+      name)
+    (eventbox :class "dualbutton-secondary" 
+      " ")
+  )
+)
+
+
+(defwindow control-center
+  :monitor 0
+  :geometry (geometry :x "1%"
+                      :y "5%"
+                      :anchor "top right"
+  )
+  (control-center)
+)

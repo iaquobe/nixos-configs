@@ -1,0 +1,81 @@
+$unit: 4em;
+$margin: 0.5em;
+$shadow-color: $surface1;
+
+.control-center {
+  border-radius: $radius;
+  background-color: $lavender;
+  margin: 5px;
+}
+
+.slidergroup, .dualbutton, .performance {
+  border-radius: $radius;
+  margin: 0.2em;
+  box-shadow: 3px 3px $shadow-color;
+}
+
+.slidergroup, .dualbutton {
+  min-height: $unit;
+  min-width: $unit;
+}
+
+// caret
+.caret {
+  min-width: $unit;
+  min-height: $unit;
+  background-color: $base;
+  margin: 0.2em;
+  border-radius: $radius;
+  box-shadow: 3px 3px $shadow-color;
+}
+.caretbutton:hover {
+  border-radius: $radius;
+  background-color: $surface0;
+}
+
+// dualbutton
+.dualbutton-primary {
+  border-top-left-radius: $radius;
+  border-bottom-left-radius: $radius;
+  background-color: $base;
+}
+.dualbutton-secondary {
+  border-bottom-right-radius: $radius;
+  border-top-right-radius: $radius;
+  background-color: $base;
+}
+.dualbutton-secondary:hover, .dualbutton-primary:hover {
+  background-color: $surface0;
+}
+
+// slidergroup
+.slider {
+  background-color: $base;
+}
+.slideraction {
+  border-top-left-radius: $radius;
+  border-bottom-left-radius: $radius;
+  min-width: 0.7 * $unit;
+  background-color: $base;
+}
+.slidermenu {
+  border-bottom-right-radius: $radius;
+  border-top-right-radius: $radius;
+  min-width: 0.4 * $unit;
+  background-color: $base;
+}
+
+
+.performance {
+  min-height: 2 * $unit;
+  min-width: 2 * $unit;
+  background-color: $base;
+  color: $blue;
+}
+.circle {
+  margin: 0.5em;
+}
+.cpu { color: $red; }
+.ram { color: $green;}
+.dsk { color: $mauve;}
+.bty { color: $peach;}
