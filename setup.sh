@@ -5,7 +5,10 @@ rm ~/.config/{nvim,tmux,waybar,hypr,kitty,zsh,eww,home-manager/home.nix}
 
 mkdir ~/.config/home-manager/
 sudo ln -s $SCRIPTPATH/nixos/ /etc/nixos
-sudo ln -s $SCRIPTPATH/nixos/home.nix ~/.config/home-manager/home.nix
+sudo nixos-rebuild switch
+
+ln -s $SCRIPTPATH/nixos/home.nix ~/.config/home-manager/home.nix
+home-manager switch
 
 # nvchad
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
