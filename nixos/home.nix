@@ -19,6 +19,7 @@
     wofi
     slurp
     grim
+    dunst
 
     firefox
     kitty

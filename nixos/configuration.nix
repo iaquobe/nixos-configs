@@ -43,7 +43,7 @@
     LC_TIME = "de_DE.UTF-8";
   };
 
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
   # services.xserver.displayManager.gdm.enable = true;
   # services.xserver.desktopManager.gnome.enable = true;
   # programs.hyprland.enable = true;
